@@ -1,0 +1,33 @@
+{{#if data.[1]}}
+
+    <h1>Student List</h1>
+    <table border=1px solid black>
+    <thead>
+    <tr>
+        <th>Student ID</th>
+        <th>Name</th>
+        <th>Program</th>
+        <th>GPA</th>
+    </tr>
+    </thead>
+    {{#each data}}
+    <tbody>
+    <tr>
+        <td>{{studId}}</td>
+        <td>{{name}}</td>
+        <td>{{program}}</td>
+        <td>{{gpa}}</td>
+    </tr>
+    </tbody>
+    {{/each}}
+
+{{else}}
+
+    <h1>Student Info:</h1>
+    <p>Student ID: {{data.studId}}</p>
+    <p>Name: {{data.name}}</p>
+    <p>Program: {{data.program}}</p>
+    <p>GPA: {{data.gpa}}</p>
+
+{{/if}}
+</table>

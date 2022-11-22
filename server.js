@@ -1,8 +1,13 @@
 // Cyclic link - https://successful-dove-attire.cyclic.app/
 var express = require('express');
-var data = require("./test2_moduleA.js");
+var data = require("./data_prep.js");
 const path = require('path');
 var app = express();
+var exphbs = require('express-handlebars');
+
+app.engine(".hbs", exphbs.engine({
+    extname:".hbs"}))
+app.set('view engine', '.hbs');
 
 var HTTP_PORT = process.env.PORT || 8080;
 
@@ -15,17 +20,25 @@ app.use(express.static('public'))
 
 app.get('/', (req, res) =>
 {
-    res.status(200).send('<h2>Declaration</h2> <p>I acknowledge the College’s academic integrity policy - and my own integrity - remain in effect whether my work is done remotely or onsite. Any test or assignment is an act of trust between me and my instructor, and escpecially with my classmates... even when no one is watching. I declare I will not break that trust.</p> <p>Name: <mark>Albert Abalian</mark></p> <p>Student Number: <mark>121761217</mark></p> <a href="/BSD">Click to visit BSD students</a><p><a href="/highGPA">Click to see who has the highest GPA</a></p>');
+    res.status(200).render(path.join(__dirname, '/views/home.hbs'));
 });
 
 app.get('/BSD', (req, res) =>
 {
-    res.status(200).send(data.getBSD());
+    var renData = data.getBSD();
+    res.status(200).render("students", {data: renData});
+});
+
+app.get('/allStudents', (req, res) =>
+{
+    var renData = data.getStudents();
+    res.status(200).render("students", {data: renData});
 });
 
 app.get('/highGPA', (req, res) =>
 {
-    res.status(200).send(data.highGPA());
+    var renData = data.highGPA();
+    res.status(200).render("students", {data: renData});
 });
 
 app.get('*', (req, res)=>

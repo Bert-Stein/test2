@@ -12,11 +12,26 @@ function init()
     return Promise.resolve();
 }
 
-function getBSD()
+function getStudents()
 {
     if (students.length == 0)  reject("no results returned");
     Promise.resolve(students);
     return students;
+}
+
+function getBSD()
+{
+    var bsd = [];
+
+    for (var i = 0; i < students.length; i++)
+    {
+        if (students[i].program == 'BSD')
+            bsd.push(students[i]);
+    }
+
+    if (bsd.length == 0)  reject("no results returned");
+    Promise.resolve(bsd);
+    return bsd;
 }
 
 function highGPA()
@@ -29,13 +44,8 @@ function highGPA()
     }
     if (bestStudent.gpa == -1)  reject("no results returned");
 
-    var bestPage = "<h1>Highest GPA:</h1><p>Student ID: " 
-    + bestStudent.studId + "</p><p>Name: " 
-    + bestStudent.name + "</p><p>Program: " 
-    + bestStudent.program + "</p><p>GPA: " + bestStudent.gpa + "</p>";
-
-    Promise.resolve(bestPage);
-    return bestPage;
+    Promise.resolve(bestStudent);
+    return bestStudent;
 }
 
-module.exports = { init, getBSD, highGPA };
+module.exports = { init, getStudents, getBSD, highGPA };
